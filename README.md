@@ -215,21 +215,26 @@ public class KafkaProductUpdatedConsumer : BackgroundService
 ## 9. 🔍 Sequence Diagram (Flow หลัก)
 
 ```mermaid
+---
+config:
+  theme: redux-color
+---
 sequenceDiagram
-    participant Client
-    participant ProductService
-    participant Kafka
-    participant OrderService
-    participant InventoryService
-    participant Redis
+  participant Client as Client
+  participant ProductService as ProductService
+  participant Kafka as Kafka
+  participant OrderService as OrderService
+  participant InventoryService as InventoryService
+  participant Redis as Redis
+  Client ->> ProductService: POST /api/Product (Add/Update)
+  ProductService ->> ProductService: Update DB
+  ProductService ->> Redis: Remove products:all / products:{id}
+  ProductService ->> Kafka: Publish "product-updated" event
+  Kafka ->> OrderService: "product-updated" event
+  OrderService ->> Redis: Remove products:all / products:{id}
+  Kafka ->> InventoryService: "product-updated" event
+  InventoryService ->> Redis: Remove products:all / products:{id}
 
-    Client->>ProductService: POST /api/Product (Add/Update)
-    ProductService->>Redis: Remove products:all / products:{id}
-    ProductService->>Kafka: Publish "product-updated" event
-    Kafka->>OrderService: "product-updated" event
-    OrderService->>Redis: Remove products:all / products:{id}
-    Kafka->>InventoryService: "product-updated" event
-    InventoryService->>Redis: Remove products:all / products:{id}
 ```
 
 ---
