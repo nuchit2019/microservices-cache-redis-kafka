@@ -8,7 +8,7 @@ Redis Cache &amp; Kafka กลยุทธ์ในการจัดการ�
 
 #
 
----
+#
 
 ## 1. 📚 แนวคิดและสถาปัตยกรรม
 
@@ -18,7 +18,7 @@ Redis Cache &amp; Kafka กลยุทธ์ในการจัดการ�
 * **Kafka**: สื่อสารระหว่าง Service แบบ Event-Driven (Publish/Subscribe Event)
 * **Cache Invalidation**: เมื่อมีการเปลี่ยนแปลงสินค้า (Create/Update) ใน ProductService → ส่ง Event ไปยัง Order/InventoryService เพื่อลบ Cache ที่เกี่ยวข้อง
 
----
+#
 
 ## 2. 🏗️ โครงสร้างโปรเจกต์ (Project Structure)
 
@@ -46,7 +46,7 @@ sql/
 README.md
 ```
 
----
+#
 
 ## 3. ⚙️ เตรียมเครื่องมือ
 
@@ -55,7 +55,7 @@ README.md
 * **Visual Studio 2022** หรือ **VS Code**
 * **Postman/Swagger** สำหรับทดสอบ API
 
----
+#
 
 ## 4. 🐳 เตรียม Docker Compose และฐานข้อมูล
 
@@ -89,7 +89,7 @@ CREATE TABLE Products (
 docker-compose up -d
 ```
 
----
+#
 
 ## 5. 📦 สร้างแต่ละ Service ตาม Clean Architecture
 
@@ -117,7 +117,7 @@ docker-compose up -d
 
 > **OrderService, InventoryService** โครงสร้างเหมือนกัน (เปลี่ยนชื่อ Entity และ Repository เท่านั้น)
 
----
+#
 
 ## 6. 🛠️ ติดตั้ง NuGet Packages (ทุก Service)
 
@@ -129,7 +129,7 @@ dotnet add package Microsoft.Data.SqlClient
 dotnet add package Swashbuckle.AspNetCore
 ```
 
----
+#
 
 ## 7. 👨‍💻 การเขียนโค้ด (ตัวอย่าง/หลักสำคัญ)
 
@@ -198,7 +198,7 @@ public class KafkaProductUpdatedConsumer : BackgroundService
 
 > InventoryService ใช้ logic เดียวกัน
 
----
+#
 
 ## 8. 🚀 สั่งรันแต่ละ Service
 
@@ -210,7 +210,7 @@ public class KafkaProductUpdatedConsumer : BackgroundService
   * Inventory: [http://localhost:5002/swagger](http://localhost:5002/swagger)
 * ทดสอบ Create/Update Product → ตรวจสอบ Log/Cache → Kafdrop (localhost:9000)
 
----
+#
 
 ## 9. 🔍 Sequence Diagram (Flow หลัก)
 
@@ -232,7 +232,9 @@ sequenceDiagram
   InventoryService ->> Redis: Remove products:all / products:{id}
 
 ```
-## 🔍  Component Diagram
+#
+
+## 10. 🔍  Component Diagram
 ```mermaid
 graph TD
     subgraph ProductService
@@ -274,9 +276,9 @@ graph TD
     Kafka(Kafka)
 ```
 
----
+#
 
-## 10. 📖 Best Practice/ข้อควรรู้
+## 11. 📖 Best Practice/ข้อควรรู้
 
 * แต่ละ Service มีฐานข้อมูลและ Cache เป็นของตัวเอง (Loose Coupling)
 * การสื่อสารระหว่าง Service ใช้ Event (Kafka)
@@ -285,65 +287,18 @@ graph TD
 * ใช้ ENV/Secret แยกพวก Password, Key (อย่าเขียนใน code!)
 * Production: เพิ่ม Logging, Exception Middleware, HealthCheck, Auth
 
----
-
-## 11. 🔗 ตัวอย่างไฟล์ .env (สำหรับ Production)
-
-```env
-# .env ตัวอย่าง
-REDIS_PASSWORD=YourRedisStrongPassw0rd
-MSSQL_PRODUCT_PASSWORD=YourStrong!Passw0rd
-MSSQL_ORDER_PASSWORD=YourStrong!Passw0rd
-MSSQL_INVENTORY_PASSWORD=YourStrong!Passw0rd
-```
-
-(ใน docker-compose.yml ให้ใช้ `${REDIS_PASSWORD}`)
-
----
-
-## 12. 📑 ตัวอย่าง README.md (ย่อ)
-
-```markdown
-# Microservices Template (.NET8 + Kafka + Redis + Clean Architecture)
-
-## Features
-- แยก Service อิสระ (Product, Order, Inventory)
-- Redis Cache Aside + TTL
-- Event-driven Cache Invalidation ผ่าน Kafka
-- Clean Architecture
-- รองรับ Docker Compose, Kafdrop UI
-
-## Quick Start
-1. `docker-compose up -d`
-2. Run Service: `dotnet run` ในแต่ละ API
-3. ทดสอบ API และ Event Flow
-4. ดู Log/Kafka event ที่ http://localhost:9000
-
-## เพิ่มเติม
-- อยากเสริม Logging, Unit Test, Auth หรือ Monitoring สามารถแยกเพิ่มในแต่ละ Layer ได้ทันที
-```
-
----
-
-## 13. 💡 สรุปเคล็ดลับสำหรับมือใหม่
+#
+ 
+## 12. 💡 สรุปเคล็ดลับสำหรับมือใหม่
 
 * แนะนำให้ทดลองสร้าง **ProductService** ให้จบก่อน แล้วค่อย copy pattern ไป Order/Inventory
 * ทุก Service สามารถพัฒนาและ deploy แยกกัน (ทดสอบง่าย, ยืดหยุ่น)
 * ใช้ Postman/Swagger, ลองเปลี่ยนค่าใน DB แล้วเช็ค cache ดูความถูกต้อง
 * หากแก้ code cache หรือ event แล้วอย่าลืม restart background service ที่ subscribe Kafka
 
----
+#
+ 
 
-## 14. ❓ ถ้ามีคำถาม หรือปัญหา
+## 13. 🎉 จบขั้นตอน !
 
-* ลองเช็ค Log ของ Service
-* เช็ค Docker (status ของ container)
-* ตรวจสอบ .env/.yml ให้ถูกต้อง
-* ดู Event ด้วย Kafdrop
-
----
-
-# 🎉 พร้อมลุย!
-
-สามารถนำไปใช้งานจริง, ทำ Workshop, หรือประกอบบทความสอน/เทรนทีมได้เลย
-**ถ้าอยากได้ไฟล์ตัวอย่าง, โครงสร้างโค้ด, Diagram หรืออธิบายโค้ดแต่ละส่วนแบบละเอียดกว่าเดิม แจ้งได้ตลอดครับ!**
+ 
