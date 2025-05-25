@@ -1,10 +1,9 @@
 # 🚩พัฒนา Microservices (Product, Order, Inventory) พร้อม Redis Cache, Kafka Event, Clean Architecture
  
-Redis Cache &amp; Kafka กลยุทธ์ในการจัดการข้อมูลใน Microservices อย่างรวดเร็วและมีประสิทธิภาพ
- 
+**Redis Cache &amp; Kafka กลยุทธ์ในการจัดการข้อมูลใน Microservices อย่างรวดเร็วและมีประสิทธิภาพ**
 
-สร้างระบบ Microservices (.NET 8) แบบแยก Service พร้อม Redis Cache, Kafka, Dapper, Clean Architecture, Docker Compose
-โดยเน้น “**Cache Invalidation with Kafka Event**”
+สร้างระบบ **Microservices (.NET 8)** แบบแยก Service พร้อม **Redis Cache**, **Kafka**, Dapper, Clean Architecture, Docker Compose
+โดยเน้น **Cache Invalidation with Kafka Event**
 
 #
 
