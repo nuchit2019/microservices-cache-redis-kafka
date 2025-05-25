@@ -1,5 +1,3 @@
-# microservices-cache-redis-kafka
-
 # 🚩พัฒนา Microservices (Product, Order, Inventory) พร้อม Redis Cache, Kafka Event, Clean Architecture
 #
 Redis Cache &amp; Kafka กลยุทธ์ในการจัดการข้อมูลใน Microservices อย่างรวดเร็วและมีประสิทธิภาพ
