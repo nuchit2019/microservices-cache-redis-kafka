@@ -215,10 +215,10 @@ public class KafkaProductUpdatedConsumer : BackgroundService
 ## 9. 🔍 Sequence Diagram (Flow หลัก)
 
 ```mermaid
----
+ 
 config:
   theme: redux-color
----
+ 
 sequenceDiagram
   participant Client as Client
   participant ProductService as ProductService
