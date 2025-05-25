@@ -232,6 +232,47 @@ sequenceDiagram
   InventoryService ->> Redis: Remove products:all / products:{id}
 
 ```
+## 🔍  Component Diagram
+```mermaid
+graph TD
+    subgraph ProductService
+        PS-API[API]
+        PS-App[Application]
+        PS-Infra[Infrastructure]
+        PS-DB[(ProductDb)]
+        PS-Redis[(Redis)]
+        PS-API --> PS-App --> PS-Infra
+        PS-Infra --> PS-DB
+        PS-Infra --> PS-Redis
+        PS-Infra --> Kafka
+    end
+
+    subgraph OrderService
+        OS-API[API]
+        OS-App[Application]
+        OS-Infra[Infrastructure]
+        OS-DB[(OrderDb)]
+        OS-Redis[(Redis)]
+        OS-API --> OS-App --> OS-Infra
+        OS-Infra --> OS-DB
+        OS-Infra --> OS-Redis
+        OS-Infra -.-> Kafka
+    end
+
+    subgraph InventoryService
+        IS-API[API]
+        IS-App[Application]
+        IS-Infra[Infrastructure]
+        IS-DB[(InventoryDb)]
+        IS-Redis[(Redis)]
+        IS-API --> IS-App --> IS-Infra
+        IS-Infra --> IS-DB
+        IS-Infra --> IS-Redis
+        IS-Infra -.-> Kafka
+    end
+
+    Kafka(Kafka)
+```
 
 ---
 
